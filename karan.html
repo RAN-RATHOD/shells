@@ -1,76 +1,43 @@
-<%@ Page Language="C#" %>
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Simple File Uploader</title>
+    <title>Karan was here</title>
     <style>
+        /* In-file CSS */
         body {
-            font-family: Arial, sans-serif;
+            background-color: #f0f0f0;
             display: flex;
             justify-content: center;
             align-items: center;
             height: 100vh;
             margin: 0;
-            background-color: #f4f4f4;
+            font-family: Arial, sans-serif;
         }
-        .upload-container {
+        .container {
             text-align: center;
-            padding: 40px;
-            background-color: #fff;
+            padding: 50px;
+            background-color: #333;
             border-radius: 10px;
-            box-shadow: 0px 0px 20px rgba(0, 0, 0, 0.1);
+            box-shadow: 0px 0px 20px rgba(0, 0, 0, 0.5);
         }
-        input[type="file"] {
+        h1 {
+            font-size: 3rem;
+            color: #ffffff;
+            margin: 0;
+        }
+        p {
+            font-size: 1.5rem;
+            color: #cccccc;
             margin-top: 10px;
-            padding: 10px;
-        }
-        input[type="submit"] {
-            margin-top: 20px;
-            padding: 10px 20px;
-            font-size: 16px;
-            cursor: pointer;
-            background-color: #4CAF50;
-            color: #fff;
-            border: none;
-            border-radius: 5px;
         }
     </style>
 </head>
 <body>
-    <div class="upload-container">
-        <h1>File Uploader</h1>
-        <form method="post" enctype="multipart/form-data">
-            <input type="file" name="fileUpload" /><br />
-            <input type="submit" value="Upload File" />
-        </form>
-        <% 
-            if (IsPostBack) 
-            {
-                if (Request.Files["fileUpload"] != null)
-                {
-                    var file = Request.Files["fileUpload"];
-                    if (file.ContentLength > 0)
-                    {
-                        string filePath = "/home/site/wwwroot/wwwroot/" + file.FileName;
-                        try 
-                        {
-                            file.SaveAs(filePath);
-                            Response.Write("<p>File uploaded successfully to: " + filePath + "</p>");
-                        }
-                        catch (Exception ex)
-                        {
-                            Response.Write("<p>Error: " + ex.Message + "</p>");
-                        }
-                    }
-                    else 
-                    {
-                        Response.Write("<p>Please select a file to upload.</p>");
-                    }
-                }
-            }
-        %>
+    <div class="container">
+        <h1>Karan was here</h1>
+        <p>Hui Hui</p>
     </div>
 </body>
 </html>
